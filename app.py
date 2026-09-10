@@ -280,7 +280,8 @@ CATEGORY_CHOICES = list(YOUR_LABEL_MAP.keys())
 
 # --- 4. Load Model and Schedule ---
 print("Setting up model and schedule...")
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available()
+                      else ('mps' if torch.backends.mps.is_available() else 'cpu'))
 print(f"Using device: {device}")
 
 schedule = DiffusionSchedule(TIMESTEPS).to(device)
@@ -392,4 +393,4 @@ with gr.Blocks(theme=gr.themes.Monochrome()) as iface:
 
 
 if __name__ == "__main__":
-    iface.launch(share=True)
+    iface.launch(share=False)
